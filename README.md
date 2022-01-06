@@ -172,5 +172,5 @@ data %>%
 ```
 ![image](https://user-images.githubusercontent.com/95172475/148467746-ca861143-59e5-4d67-82b0-6645ed046f3d.png)
 
-*Sadly I didn't manage to sort the chromosomes by numbers in this picture as if chromosomes are "as.numeric" `geom_bar()` doesn't work.  
+*Sadly I didn't manage to sort the chromosomes by numbers in this picture as if chromosomes are "as.numeric" `geom_bar()` doesn't work.*  
 
