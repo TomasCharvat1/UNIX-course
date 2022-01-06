@@ -102,6 +102,8 @@ The extreme values in the dataset drawn here by the `geom_line()` are distractin
 Previous figures however do not show the data in detail. Better idea gives a figure of just one chromosome. 
 By simple adjustments of the previous code we get:
  ```
+data<-read_tsv("all1.tsv",
+               col_names=c("CHROM", "POS", "DOT", "REF", "ALT", "QUAL", "DP", "TYPE"))
 data %>%
   group_by(CHROM) %>%
   mutate(POS_block = plyr::round_any(POS, 1e3)) ->
