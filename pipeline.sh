@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # First look at the data
 
 zcat luscinia_vars.vcf.gz | less -S
