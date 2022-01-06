@@ -83,7 +83,7 @@ dcc %>%
   geom_line() +
   facet_wrap(~as.numeric(CHROM), ncol = 8) +
   labs(x="Position on the chromosome", y= "Mean read depth per 10k bases", title = "Distribution of read depths of all chromosomes") + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90))
   
   ```
  
@@ -115,7 +115,7 @@ dcc %>%
   ggplot(aes(POS_block, DP)) +
   geom_line() +
   labs(x="Position on the chromosome", y= "Mean read depth per 1k bases", title = "Distribution of read depths on chromosome 1") + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
 ![image](https://user-images.githubusercontent.com/95172475/148462743-0542b3b1-3b58-460c-9b2e-deac1a9f1382.png)
@@ -128,7 +128,7 @@ data %>%
   ggplot(aes(as.numeric(CHROM),DP)) +
   geom_smooth() +
   labs(x="Position in the genome - From chr1 to 29 (Z)", y= "Read depth", title = "Distribution of read depths over whole genome") + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90))
   ```
   
 ![image](https://user-images.githubusercontent.com/95172475/148462985-cc1078ba-09d1-449a-899e-eb23e31b7c64.png)
@@ -158,12 +158,19 @@ data %>%
   scale_x_log10() + 
   facet_wrap(~as.numeric(CHROM), ncol = 8) +
   labs(x="Read depth", y= "N of bases", title = "Distribution of read depth per chromosome") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90))
 ```
 ![image](https://user-images.githubusercontent.com/95172475/148463491-537fe482-9c2f-49d8-b222-bf00b7dfe5a9.png)
 
-
-
+### Distribution of the DP by chromosome
+```
+data %>%
+  ggplot(aes(CHROM)) +
+  geom_bar() +
+  labs(x="Chromosome", y= "N of bases", title = "Distribution of read depth by chromosome") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+![image](https://user-images.githubusercontent.com/95172475/148467746-ca861143-59e5-4d67-82b0-6645ed046f3d.png)
 
 
 
