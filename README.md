@@ -137,7 +137,7 @@ data %>%
 
 
 ** DISCLAIMER ** 
-*After I finished all this code, I realized, that distribution of read depth over a genome or a chromosome and read depth over a genome or a chromosome might be two completely different things :D All the R code presented till this point might be then just bohus extra.*
+*After I finished all this code, I realized, that distribution of read depth over a genome or a chromosome and read depth over a genome or a chromosome might be two completely different things :) All the R code presented till this point might be then just bonus extra.*
 
 ### Distribution of the DP per genome
 
