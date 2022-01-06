@@ -31,7 +31,7 @@ cat fix.tsv | sort -k1,1n -k2,2n  >sorted.tsv
 cat sorted.tsv Zchrom.tsv | sed 's/^/chr/' >clear.tsv
  ```
  
- ### Extracting relevant data and creating a new data frame
+ ### Extract relevant data and creating a new data frame
 ```
 IN=clear.tsv
 
@@ -64,7 +64,7 @@ data<-read_tsv("all9.tsv",
                col_names=c("CHROM", "POS", "DOT", "REF", "ALT", "QUAL", "DP", "TYPE"))
 ```
 
-### The distribution of DP over the genome and per chromosome
+### Read depth of the genome and per chromosome
 
 Following script will round the position of each measured DP by 10000 and subsequently calculate the mean for each set of 1000 bases. We then plot it 
 
@@ -88,15 +88,18 @@ dcc %>%
   ```
  
 
-* Z chromosome is marked as "NA" due to the numeric sorting.
+*Z chromosome is marked as "NA" due to the numeric sorting.*
 
-![image](https://user-images.githubusercontent.com/95172475/148428131-71e2b1b7-c67c-498e-879f-438c2fff9615.png)
+![image](https://user-images.githubusercontent.com/95172475/148462333-d7be0fef-31a9-4ce1-9096-7706e84a212d.png)
 
 
-This figure however does not show the data in detail. Better idea gives a figure of just one chromosome. 
+The extreme values in the dataset drawn here by the `geom_line()` are distracting little bit from the more common values, that can be visualized better by `geom_smooth()`
 
-### The distribution of DP on chromosome 1
+![image](https://user-images.githubusercontent.com/95172475/148462424-47ce12ec-7cac-4131-918b-1b578d11c200.png)
 
+
+### Read depth of chromosome 1
+Previous figures however do not show the data in detail. Better idea gives a figure of just one chromosome. 
 By simple adjustments of the previous code we get:
  ```
 data %>%
@@ -115,7 +118,51 @@ dcc %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-![image](https://user-images.githubusercontent.com/95172475/148426711-941b7ed7-114f-45c3-861d-860aa1fae03b.png)
+![image](https://user-images.githubusercontent.com/95172475/148462743-0542b3b1-3b58-460c-9b2e-deac1a9f1382.png))
+
+### Read depth of the whole genome
+ ```
+data$CHROMZ<- gsub("Z","29", data$CHROM) 
+
+data %>%
+  ggplot(aes(as.numeric(CHROM),DP)) +
+  geom_smooth() +
+  labs(x="Position in the genome - From chr1 to 29 (Z)", y= "Read depth", title = "Distribution of read depths over whole genome") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  ```
+  
+![image](https://user-images.githubusercontent.com/95172475/148462985-cc1078ba-09d1-449a-899e-eb23e31b7c64.png)
+
+
+** DISCLAIMER ** 
+*After I finished all this code, I realized, that distribution of read depth over a genome or a chromosome and read depth over a genome or a chromosome might be two completely different things :D All the R code presented till this point might be then just bohus extra.*
+
+### Distribution of the DP per genome
+
+```
+data %>%
+  ggplot(aes(DP)) +
+  geom_histogram() +
+  scale_x_log10() + 
+  labs(x="Read depth", y= "N of bases", title = "Distribution of read depth over whole genome")
+```
+
+![image](https://user-images.githubusercontent.com/95172475/148461572-8c96ddd4-f217-408a-bf24-04b72ac0e95e.png)
+
+### DIstribution of the DP per chromosome
+
+```
+data %>%
+  ggplot(aes(DP)) +
+  geom_histogram() +
+  scale_x_log10() + 
+  facet_wrap(~as.numeric(CHROM), ncol = 8) +
+  labs(x="Read depth", y= "N of bases", title = "Distribution of read depth per chromosome") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+![image](https://user-images.githubusercontent.com/95172475/148463306-b66a2628-6303-4484-b9ab-e462459a784d.png)
+
+
 
 
 
