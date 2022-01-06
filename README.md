@@ -32,9 +32,7 @@ cat sorted.tsv Zchrom.tsv | sed 's/^/chr/' >clear.tsv
  ```
  
  ### Extracting relevant data and creating a new data frame
- 
- 
- ```
+```
 IN=clear.tsv
 
 <$IN cut -f1-6 > clearmain.tsv
@@ -43,6 +41,18 @@ IN=clear.tsv
 paste clearmain.tsv cleardp.tsv cleartype.tsv >all9.tsv
 ```
 Such prepared table can be used for majority (if not all) of the final exercises. 
+
+### *Extra - Extracting relevant data and creating a new data frame just for chr 1*
+
+ ```
+zcat luscinia_vars.vcf.gz | grep -v '^#' | grep -v '_random' >nohead1.vcf
+IN=nohead1.vcf
+<$IN cut -f1-6 > main1.tsv
+<$IN egrep -o 'DP=[^;]*' | sed 's/DP=//' > dp1.tsv
+<$IN awk '{if($0 ~ /INDEL/) print "INDEL"; else print "SNP"}' >type1.tsv
+paste main1.tsv dp1.tsv type1.tsv > all1.tsv
+```
+
 
 ## Creating the figures in R
 
@@ -56,7 +66,7 @@ data<-read_tsv("all9.tsv",
 
 ### The distribution of DP over the genome and per chromosome
 
-Following script will rond the position of each measured DP by 10000 and subsequently calculate the mean for each set of 1000 bases. We then plot it 
+Following script will round the position of each measured DP by 10000 and subsequently calculate the mean for each set of 1000 bases. We then plot it 
 
 ```
 data %>%
@@ -74,11 +84,37 @@ dcc %>%
   facet_wrap(~as.numeric(CHROM), ncol = 8) +
   labs(x="Position on the chromosome", y= "Mean read depth per 10k bases", title = "Read depth of all chromosomes") + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  
+  ```
+ 
 
-```
+* Z chromosome is marked as "NA" due to the numeric sorting.
 
 ![image](https://user-images.githubusercontent.com/95172475/148413142-e5062240-c787-4418-8867-f21c8392db8d.png)
 
+This figure however does not show the data in detail. Better idea gives a figure of just one chromosome. 
+
+### The distribution of DP on chromosome 1
+
+By simple adjustments of the previous code we get:
+ ```
+data %>%
+  group_by(CHROM) %>%
+  mutate(POS_block = plyr::round_any(POS, 1e3)) ->
+  dc
+
+dc %>%
+  group_by(CHROM, POS_block) %>%
+  summarise(DP = mean(DP)) -> dcc
+
+dcc %>%
+  ggplot(aes(POS_block, DP)) +
+  geom_line() +
+  labs(x="Position on the chromosome", y= "Mean read depth per 1k bases", title = "Distribution of read depths on chromosome 1") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+![image](https://user-images.githubusercontent.com/95172475/148426711-941b7ed7-114f-45c3-861d-860aa1fae03b.png)
 
 
 
