@@ -118,7 +118,7 @@ dcc %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-![image](https://user-images.githubusercontent.com/95172475/148462743-0542b3b1-3b58-460c-9b2e-deac1a9f1382.png))
+![image](https://user-images.githubusercontent.com/95172475/148462743-0542b3b1-3b58-460c-9b2e-deac1a9f1382.png)
 
 ### Read depth of the whole genome
  ```
@@ -149,7 +149,7 @@ data %>%
 
 ![image](https://user-images.githubusercontent.com/95172475/148461572-8c96ddd4-f217-408a-bf24-04b72ac0e95e.png)
 
-### DIstribution of the DP per chromosome
+### Distribution of the DP per chromosome
 
 ```
 data %>%
@@ -160,7 +160,8 @@ data %>%
   labs(x="Read depth", y= "N of bases", title = "Distribution of read depth per chromosome") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
-![image](https://user-images.githubusercontent.com/95172475/148463306-b66a2628-6303-4484-b9ab-e462459a784d.png)
+![image](https://user-images.githubusercontent.com/95172475/148463491-537fe482-9c2f-49d8-b222-bf00b7dfe5a9.png)
+
 
 
 
