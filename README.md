@@ -40,7 +40,7 @@ IN=clear.tsv
 <$IN awk '{if($0 ~ /INDEL/) print "INDEL"; else print "SNP"}' >cleartype.tsv
 paste clearmain.tsv cleardp.tsv cleartype.tsv >all9.tsv
 ```
-Such prepared table can be used for majority (if not all) of the final exercises. 
+Such prepared table can be used to solve more of the final exercises. For our purposes are some features of the table redundant.
 
 ### *Extra - Extracting relevant data and creating a new data frame just for chr 1*
 
@@ -82,7 +82,7 @@ dcc %>%
   ggplot(aes(POS_block, DP)) +
   geom_line() +
   facet_wrap(~as.numeric(CHROM), ncol = 8) +
-  labs(x="Position on the chromosome", y= "Mean read depth per 10k bases", title = "Read depth of all chromosomes") + 
+  labs(x="Position on the chromosome", y= "Mean read depth per 10k bases", title = "Distribution of read depths of all chromosomes") + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
   
   ```
@@ -90,7 +90,8 @@ dcc %>%
 
 * Z chromosome is marked as "NA" due to the numeric sorting.
 
-![image](https://user-images.githubusercontent.com/95172475/148413142-e5062240-c787-4418-8867-f21c8392db8d.png)
+![image](https://user-images.githubusercontent.com/95172475/148428131-71e2b1b7-c67c-498e-879f-438c2fff9615.png)
+
 
 This figure however does not show the data in detail. Better idea gives a figure of just one chromosome. 
 
